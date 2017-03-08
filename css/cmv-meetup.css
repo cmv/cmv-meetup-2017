@@ -1,0 +1,24 @@
+.reveal img {
+    max-height: 75%;
+    max-width: 75%;
+}
+.reveal .cmv-logo {
+    background-color:rgb(0,0,0);
+    background-color:rgba(0,0,0,0);
+    border:0;
+    box-shadow: none;
+    height: 150px;
+}
+
+.reveal pre code {
+    background-color: #000;
+}
+.reveal pre code .hljs-comment {
+    color: #0C0;
+}
+.reveal pre code .hljs-string {
+    color: #E0E0E0;
+}
+.reveal pre code mark .hljs-string {
+    color: #333;
+}

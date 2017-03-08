@@ -1,0 +1,430 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>CMV Meetup at the 2017 ESRI Developer Summit</title>
+
+		<meta name="description" content="Presentation to the CMV Meetup, March 8th, 2017">
+		<meta name="author" content="Tim McGee, MoosePoint Technology">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+		<link rel="stylesheet" href="css/cmv-meetup.css" id="theme">
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h2>CMV Meet-Up</h2e>
+					<h3>What's New and What's coming</h3>
+					<img data-src="images/cmv-logo.png" class="cmv-logo"/>
+					<p>ESRI Developer Summit<br/>March 8th, 2017</p>
+					<p>
+						<small>
+							Presented by Tim McGee<br/>
+							<a href="https://github.com/tmcgee">github.com/tmcgee</a> / <a href="http://moosepoint.com">MoosePoint Technology</a> / <a href="http://twitter.com/moosepoint">@MoosePoint</a>
+						</small>
+					</p>
+				</section>
+
+  				<section>
+     				<h2>CMV Meet-Up</h2>
+     				<ul>
+					   	<li>CMV Version 2.0</li>
+					   	<li>Additional CMV Projects</li>
+					   	<li>CMV for Esri JS API 4.x</li>
+					   	<li>CMV.next</li>
+
+					   	<br/>
+					   	<li>User Presentations</li>
+					   	<br/>
+
+					   	<li>Dylan Schiemann of SitePen
+					   		<ul>
+					   			<li>TypeScript with Dojo 1.x</li>
+					   		</ul>
+					   	</li>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV Team</h2>
+
+     				<a href="https://github.com/orgs/cmv/peoplee" target="_blank">The Core Dev Team</a>
+					<br/><br/>
+
+     				Another dozen additional developers have<br/>contributed code to this release.<br/>
+     				Directly (PRs) and indirectly (e-mail).
+					<br/><br/>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<ul>
+					   	<li>Released Today!</li>
+					   	<li>Over 18 months of work</li>
+					   	<li>Over 350 commits</li>
+					</ul>
+					<br/><br/>
+     				<a href="https://github.com/cmv/cmv-app/releases/tag/v2.0.0-beta.1" target="_blank">Release Notes</a><br/>
+     				<a href="http://cmv.releasepage.co/" target="_blank">cmv.releasepage.co</a>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>"Beta" with Air Quotes</h3><br/>
+
+					Many developers using the core enhancements in<br/>production for 6 months or more.<br/>
+					Nearly a year for some.<br/><br/>
+
+					Short beta period (3 months?) for more<br/>developers to benefit and test.
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>Highlights</h3>
+     				<ul>
+					   	<li>Controller Mixins</li>
+					   	<li>Dojo/i18n support - cmv and core widgets</li>
+					   	<li>New Layer Types</li>
+					   	<li>New Widgets</li>
+					   	<li>Dojo's Flat theme replaces DBootstrap</li>
+					   	<li>Updated Documentation</li>
+					   	<li>HTTPS Everywhere</li>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>New controller mixins are key</h3>
+     				Provide additional functionality, flexibility and configuration options
+					<pre><code data-trim data-noescape>
+require(window.dojoConfig, [
+    'dojo/_base/declare',
+
+    // minimal Base Controller
+    'viewer/_ControllerBase',
+
+    // *** Controller Mixins
+    // Use the core mixins, add custom mixins
+    // or replace core mixins with your own
+    <mark>'viewer/_ConfigMixin',</mark> // manage the Configuration
+    <mark>'viewer/_LayoutMixin',</mark> // build and manage the Page Layout and User Interface
+    <mark>'viewer/_MapMixin',</mark> // build and manage the Map
+    <mark>'viewer/_WidgetsMixin'</mark> // build and manage the Widgets
+
+], function (
+    declare,
+
+    _ControllerBase,
+    _ConfigMixin,
+    _LayoutMixin,
+    _MapMixin,
+    _WidgetsMixin
+
+) {
+    var App = declare([
+
+        // add custom mixins here...note order may be important
+        _LayoutMixin,
+        _WidgetsMixin,
+        _MapMixin,
+
+        // configMixin should be right before _ControllerBase so it is
+        // called first to initialize the config object
+        _ConfigMixin,
+
+        // controller base needs to be last
+        _ControllerBase
+    ]);
+    var app = new App();
+    app.startup();
+});
+    				</code></pre>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>Mixin for WebMaps</h3>
+					<pre><code data-trim data-noescape>
+require(window.dojoConfig, [
+    'dojo/_base/declare',
+    'viewer/_ControllerBase',
+    'viewer/_ConfigMixin',
+    'viewer/_LayoutMixin',
+    'viewer/_MapMixin',
+    'viewer/_WidgetsMixin'
+
+    <mark>'viewer/_WebMapMixin'</mark>
+],
+    				</code></pre>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>Mixin for WebApp Builder widgets</h3>
+					<pre><code data-trim data-noescape>
+require(window.dojoConfig, [
+    'dojo/_base/declare',
+    'viewer/_ControllerBase',
+    'viewer/_ConfigMixin',
+    'viewer/_LayoutMixin',
+    'viewer/_MapMixin',
+    'viewer/_WidgetsMixin'
+
+    <mark>'viewer/_WABMixin'</mark>
+],
+    				</code></pre>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>Mixin for Calcite Maps</h3>
+					<pre><code data-trim data-noescape>
+require(window.dojoConfig, [
+    'dojo/_base/declare',
+    'viewer/_ControllerBase',
+    'viewer/_ConfigMixin',
+    'viewer/_LayoutMixin',
+    'viewer/_MapMixin',
+    'viewer/_WidgetsMixin'
+
+    <mark>'config/_CalciteMixin'</mark>
+]
+    				</code></pre>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>Mixins for Esri JS API 4.x</h3>
+					<pre><code data-trim data-noescape>
+require(window.dojoConfig, [
+    'dojo/_base/declare',
+    'viewer/_ControllerBase',
+    'viewer/_ConfigMixin',
+
+    // 'viewer/_LayoutMixin',
+    // 'viewer/_MapMixin',
+    // 'viewer/_WidgetsMixin'
+
+    <mark>'config/_Layout4Mixin',</mark>
+    <mark>'config/_Map4Mixin',</mark>
+    <mark>'config/_Widgets4Mixin'</mark>
+]
+    				</code></pre>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>New Layers</h3>
+     				<ul>
+					   	<li>Vector Tile layer</li>
+					   	<li>WFS Layers</li>
+					   	<li>User-defined Layer types (ex. GeoJSON)</li>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>New Widgets</h3>
+     				<ul>
+					   	<li>Locale</li>
+					   	<li>Legend (wraps Esri widget)</li>
+					   	<li>Basemaps Gallery</li>
+					   	<li>Esri Search widget</li>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>New Widget Types</h3>
+     				<ul>
+					   	<li>loading</li>
+					   	<li>layout</li>
+					   	<li>layer</li>
+					   	<li>User-defined widget types</li>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV Version 2.0 Beta 1</h2>
+     				<h3>Demo</h3><br/>
+     				<a href="https://cdn.rawgit.com/cmv/cmv-app/v2.0.0-beta.1/viewer/" target="_blank">Demo</a><br/>
+  				</section>
+
+  				<section>
+     				<h2>Additional CMV Projects</h2>
+     				<ul>
+					   	<li>Support for WebApp Builder widgets</li>
+					   	<a href="https://github.com/cmv/cmv-wab-widgets/" target="_blank">cmv-wab-widgets</a>
+					   	<li>Theming with Calcite Maps</li>
+					   	<a href="https://github.com/cmv/cmv-calcite-maps/" target="_blank">cmv-calcite-maps</a>
+					   	<li>Custom Dojo Builds</li>
+					   	<a href="https://github.com/cmv/cmv-app-dojo-builder/" target="_blank">cmv-app-dojo-builder</a>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV for Esri JavaScript 4.x</h2>
+     				<ul>
+					   	<li>Current for Esri JavaScript API 4.3</li>
+					   	<li>Both 2D and 3D maps</li>
+					</ul>
+  				</section>
+
+  				<section>
+     				<h2>CMV for Esri JavaScript 4.x</h2>
+     				<h3>All current Esri layer Types</h3>
+					<pre><code data-trim data-noescape>
+csv: 'esri/layers/CSVLayer',
+dynamic: 'esri/layers/MapImageLayer',
+elevation: 'esri/layers/ElevationLayer',
+feature: 'esri/layers/FeatureLayer',
+georss: 'esri/layers/GeoRSSLayer',
+group: 'esri/layers/GroupLayer',
+imagery: 'esri/layers/ImageryLayer',
+mesh: 'esri/layers/IntegratedMeshLayer',
+osm: 'esri/layers/OpenStreetMapLayer',
+pointcloud: 'esri/layers/PointCloudLayer',
+scene: 'esri/layers/SceneLayer',
+stream: 'esri/layers/StreamLayer',
+tile: 'esri/layers/TileLayer',
+vectortile: 'esri/layers/VectorTileLayer',
+webtiled: 'esri/layers/WebTileLayer'
+    				</code></pre>
+  				</section>
+
+  				<section>
+     				<h2>CMV for Esri JavaScript 4.x</h2>
+     				<ul>
+					   	<li>All current Esri widgets</li>
+					   	<li>Core CMV widgets converted.<br/>
+					   	Remainder require Esri widgets:
+					   		<ul>
+					   			<li>Bookmarks</li>
+					   			<li>Draw</li>
+					   			<li>Edit</li>
+					   			<li>Measurement</li>
+					   		</ul>
+					   	<li>Widget themes</li>
+					</ul>
+  				</section>
+  				<section>
+     				<h2>CMV for Esri JavaScript 4.x</h2>
+     				<h3>Demos</h3><br/>
+				   	<a href="http://localhost:8000/cmv/cmv-app-4/" target="_blank">2D Map</a><br/>
+				   	<a href="http://localhost:8000/cmv/cmv-app-4/?config=3d" target="_blank">3D Map</a><br/>
+				   	<a href="http://localhost:8000/cmv/cmv-app-4/calcite.html" target="_blank">2D Map with Calcite</a><br/>
+				   	<a href="http://localhost:8000/cmv/cmv-app-4/calcite.html?config=calcite3d" target="_blank">3D Map with Calcite</a><br/>
+  				</section>
+
+				<section>
+					<h2>CMV.next</h2>
+					<h3>What's Next?</h3>
+					<ul>
+						<li>Much more frequent releases ;)</li>
+						<br/>
+						<li>Public repo for 4.x release</li>
+						<li>"CMV" namespace integrating 3.x and 4.x</li>
+						<li>2D and 3D maps in same app</li>
+						<li>Continued 4.x support as Esri reaches feature parity with 3.x</li>
+
+					</ul>
+				</section>
+
+				<section>
+					<h2>CMV.next</h2>
+					<h3>What's Next?</h3>
+					<ul>
+						<li>Much more frequent releases ;)</li>
+						<br/>
+						<li>Separate, centralized repo for core widgets</li>
+						<li>Additional layouts and themes</li>
+						<li>CDN for CMV? Publish via npmjs?</li>
+						<li>Offline Mobile Viewer / Editor</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>CMV Community</h2>
+					<ul>
+						<li>GitHub: <a href="https://github.com/cmv" target="_blank">github.com/cmv</a></li>
+						<li>Widgets: <a href="https://github.com/cmv/cmv-contrib-widgets" target="_blank">github.com/cmv/cmv-contrib-widgets</a></li>
+						<li>Documentation: <a href="https://docs.cmv.io" target="_blank">docs.cmv.io</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>CMV Community</h2>
+					<ul>
+						<li>Gitter: <a href="https://gitter.im/cmv/" target="_blank">gitter.im/cmv</a></li>
+						<li>Slack: <a href="http://thespatialcommunity.org" target="_blank">thespatialcommunity.org</a> #cmv channel</li>
+						<li><a href="https://geonet.esri.com/groups/cmv" target="_blank">geonet.esri.com/groups/cmv</a></li>
+						<li><a href="https://gis.stackexchange.com/questions/tagged/cmv" target="_blank">gis.stackexchange.com/questions/tagged/cmv</a></li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Thank You!</h2>
+					<h3>Contact</h3>
+					<p>
+						Tim McGee<br/>MoosePoint Technology<br/><br/>
+						<small>
+							<a href="https://github.com/tmcgee">github.com/tmcgee</a><br/>
+							<a href="mailto:tim@moosepoint.com">tim@moosepoint.com</a><br/>
+							<a href="http://twitter.com/moosepoint">@MoosePoint</a>
+						</small>
+					</p>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+				hideAddressBar: true,
+				touch: true,
+				previewLinks: false,
+
+				margin: 0.05,
+
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
